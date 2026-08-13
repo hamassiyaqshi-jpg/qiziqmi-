@@ -1,279 +1,271 @@
-<!DOCTYPE html>
+[14/08/2026 00:49] Aa: <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maxsus Savol-Javob</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shodiya uchun ✨</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-    body {
-      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+        body {
+            background: linear-gradient(135deg, #a8edd8 0%, #fed6e3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
 
-    .card {
-      background: #ffffff;
-      padding: 35px 25px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      position: relative;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
 
-    h2 {
-      color: #d81b60;
-      font-size: 20px;
-      margin-bottom: 30px;
-      line-height: 1.5;
-    }
+        h2 {
+            color: #2d3748;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
 
-    .btn-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      align-items: center;
-      position: relative;
-      width: 100%;
-    }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            min-height: 80px;
+            position: relative;
+        }
 
-    button {
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-    }
+        button {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
 
-    .btn-yes {
-      background-color: #e91e63;
-      color: white;
-      z-index: 1;
-    }
+        .btn-yes {
+            background: #ff4757;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.35);
+        }
 
-    .btn-yes:hover {
-      background-color: #c2185b;
-      transform: scale(1.05);
-    }
+        .btn-yes:hover {
+            background: #ff6b81;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.45);
+        }
 
-    .btn-evade {
-      background-color: #757575;
-      color: white;
-      position: absolute;
-      transition: all 0.1s ease;
-      z-index: 10;
-      white-space: nowrap;
-    }
+        .btn-evade {
+            background: #747d8c;
+            color: white;
+            position: absolute;
+            white-space: nowrap;
+            user-select: none;
+            transition: left 0.15s ease-out, top 0.15s ease-out;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
 
-    .option-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+        .step {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
 
-    .btn-option {
-      background-color: #f3e5f5;
-      color: #8e24aa;
-      border: 2px solid #ab47bc;
-    }
+        .step.active {
+            display: block;
+        }
 
-    .btn-option:hover {
-      background-color: #ab47bc;
-      color: white;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .hidden {
-      display: none !important;
-    }
+        .final-title {
+            color: #ff4757;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
 
-    .result-box {
-      text-align: left;
-      background: #fdf2f8;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #fbcfe8;
-      margin-top: 15px;
-    }
-
-    .result-box p {
-      margin-bottom: 8px;
-      color: #831843;
-      font-size: 16px;
-    }
-  </style>
+        .summary-box {
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 16px;
+            text-align: left;
+            width: 100%;
+            margin-top: 15px;
+            color: #2f3542;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="card" id="mainCard">
-    <!-- 1-bosqich -->
-    <div id="step1">
-      <h2>Salom Shodiya, sen buni ertalab ko'ryapsan, men esa tuni bilan harakat qildim. Ko'rishni istaysanmi?</h2>
-      <div class="btn-container">
-        <button class="btn-yes" id="yesBtn1" onclick="nextStep(2)">Hohlayman</button>
-        <button id="btnNo1" class="btn-evade">Qiziq emas</button>
-      </div>
+<div class="card" id="cardContainer">
+
+    <!-- 1-BOSQICH -->
+    <div class="step active" id="step1">
+        <h2>Salom Shodiya, sen buni ertalab ko'ryapsan, men esa tuni bilan harakat qildim. Ko'rishni istaysanmi?</h2>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="nextStep(2)">Hohlayman</button>
+            <button class="btn-evade" id="noBtn1" onmouseover="moveBtn(this)" onclick="moveBtn(this)">Qiziq emas</button>
+        </div>
+    </div>
+[14/08/2026 00:49] Aa: <!-- 2-BOSQICH -->
+    <div class="step" id="step2">
+        <h2>Ertaga ko'rishamizmi?</h2>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="nextStep(3)">Ha</button>
+            <button class="btn-evade" id="noBtn2" onmouseover="evadeAndText(this)" onclick="evadeAndText(this)">Yo'q</button>
+        </div>
     </div>
 
-    <!-- 2-bosqich -->
-    <div id="step2" class="hidden">
-      <h2>Ertaga ko'rishamizmi?</h2>
-      <div class="btn-container">
-        <button class="btn-yes" id="yesBtn2" onclick="nextStep(3)">Ha</button>
-        <button id="btnNo2" class="btn-evade">Yo'q</button>
-      </div>
+    <!-- 3-BOSQICH -->
+    <div class="step" id="step3">
+        <h2>Soat nechida ko'rishamiz?</h2>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="saveData('Soat', '12:00'); nextStep(4)">12:00</button>
+            <button class="btn-yes" onclick="saveData('Soat', '13:00'); nextStep(4)">13:00</button>
+            <button class="btn-yes" onclick="saveData('Soat', '14:00'); nextStep(4)">14:00</button>
+            <button class="btn-yes" onclick="saveData('Soat', '15:00'); nextStep(4)">15:00</button>
+        </div>
     </div>
 
-    <!-- 3-bosqich -->
-    <div id="step3" class="hidden">
-      <h2>Soat nechida ko'rishamiz?</h2>
-      <div class="option-grid">
-        <button class="btn-option" onclick="selectTime('12:00')">12:00</button>
-        <button class="btn-option" onclick="selectTime('13:00')">13:00</button>
-        <button class="btn-option" onclick="selectTime('14:00')">14:00</button>
-        <button class="btn-option" onclick="selectTime('15:00')">15:00</button>
-      </div>
+    <!-- 4-BOSQICH -->
+    <div class="step" id="step4">
+        <h2>Nima qilamiz?</h2>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="saveData('Reja', 'Sayr'); nextStep(5)">Sayr</button>
+            <button class="btn-yes" onclick="saveData('Reja', 'Kino'); nextStep(5)">Kino</button>
+            <button class="btn-yes" onclick="saveData('Reja', 'Ovqatlanish'); nextStep(5)">Ovqatlanish</button>
+            <button class="btn-yes" onclick="saveData('Reja', 'Hammasi'); nextStep(5)">Hammasi ✨</button>
+        </div>
     </div>
 
-    <!-- 4-bosqich -->
-    <div id="step4" class="hidden">
-      <h2>Nima qilamiz?</h2>
-      <div class="option-grid">
-        <button class="btn-option" onclick="selectActivity('Sayr')">Sayr</button>
-        <button class="btn-option" onclick="selectActivity('Kino')">Kino</button>
-        <button class="btn-option" onclick="selectActivity('Ovqatlanish')">Ovqatlanish</button>
-        <button class="btn-option" onclick="selectActivity('Hammasini!')">Hammasini</button>
-      </div>
+    <!-- 5-BOSQICH -->
+    <div class="step" id="step5">
+        <h2>Do'stlar bilanmi yoki o'zimizmi?</h2>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="saveData('Tarkib', 'Do\'stlar bilan'); finish()">Do'stlar bilan</button>
+            <button class="btn-yes" onclick="saveData('Tarkib', 'O\'zimiz'); finish()">O'zimiz 🤍</button>
+        </div>
     </div>
 
-    <!-- 5-bosqich -->
-    <div id="step5" class="hidden">
-      <h2>Do'stlar bilanmi yoki o'zimizmi?</h2>
-      <div class="btn-container">
-        <button class="btn-yes" onclick="finish('Do\'stlar bilan')">Do'stlar bilan</button>
-        <button class="btn-yes" onclick="finish('O\'zimiz')">O'zimiz</button>
-      </div>
+    <!-- YAKUNIY BOSQICH -->
+    <div class="step" id="stepFinal">
+        <h2 class="final-title">Ajoyib! Kelishdik! 🎉</h2>
+        <p style="color: #57606f;">Tanlangan reja tafsilotlari:</p>
+        <div class="summary-box" id="summaryContent"></div>
     </div>
 
-    <!-- Yakuniy sahifa -->
-    <div id="stepFinal" class="hidden">
-      <h2>Ajoyib! Rejamiz tayyor: ✨</h2>
-      <div class="result-box">
-        <p>⏰ <b>Vaqt:</b> <span id="resTime"></span></p>
-        <p>🎯 <b>Reja:</b> <span id="resActivity"></span></p>
-        <p>👥 <b>Kimlar:</b> <span id="resWho"></span></p>
-      </div>
-    </div>
-  </div>
+</div>
 
-  <script>
-    const failTexts = [
-      "Tutolmading!",
-      "Yana urinib ko'r!",
-      "Baribir bosolmaysan :)",
-      "Qochdim!",
-      "Urinish besamar!",
-      "Topolmaysan!"
+<script>
+    // METAKOD: Telegram Botingiz ma'lumotlarini shu yerga kiriting
+    const BOT_TOKEN = "BOT_TOKENINI_SHUYERGA_YOZING";
+    const CHAT_ID = "CHAT_IDINGIZNI_SHUYERGA_YOZING";
+
+    const choices = {};
+
+    const phraseList = [
+        "Tutolmading!",
+        "Yana urinib ko'r!",
+        "Qochdim! 😜",
+        "Baribir tutolmaysan!",
+        "Deyarli tutganding!",
+        "Urinish besamar!"
     ];
 
-    let answers = {};
+    function nextStep(stepNum) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById('step' + stepNum).classList.add('active');
+    }
 
-    function setupEvadingButton(btnId, yesBtnId) {
-      const btn = document.getElementById(btnId);
-      const card = document.getElementById('mainCard');
-      const yesBtn = document.getElementById(yesBtnId);
-
-      // Boshlang'ich joylashuv
-      btn.style.position = 'absolute';
-      btn.style.right = '20px';
-
-      const moveBtn = () => {
+    function moveBtn(btn) {
+        const card = document.getElementById('cardContainer');
         const cardRect = card.getBoundingClientRect();
-        const yesRect = yesBtn.getBoundingClientRect();
-        const btnWidth = btn.offsetWidth || 100;
-        const btnHeight = btn.offsetHeight || 40;
+        
+        const padding = 20;
+        const maxX = cardRect.width - btn.offsetWidth - padding;
+        const maxY = cardRect.height - btn.offsetHeight - padding;
 
-        let newX, newY;
-        let isOverlapping = true;
-        let attempts = 0;
+        const newX = Math.max(padding, Math.floor(Math.random() * maxX));
+        const newY = Math.max(padding, Math.floor(Math.random() * maxY));
 
-        // "Ha" tugmasining ustiga tushib qolmasligi uchun xavfsiz koordinatani hisoblash
-        while (isOverlapping && attempts < 50) {
-          attempts++;
-          newX = Math.random() * (cardRect.width - btnWidth - 40) + 20;
-          newY = Math.random() * (cardRect.height - btnHeight - 40) + 20;
+        btn.style.left = newX + 'px';
+        btn.style.top = newY + 'px';
+    }
 
-          const absoluteNewX = cardRect.left + newX;
-          const absoluteNewY = cardRect.top + newY;
+    function evadeAndText(btn) {
+        moveBtn(btn);
+        const randomPhrase = phraseList[Math.floor(Math.random() * phraseList.length)];
+        btn.innerText = randomPhrase;
+    }
 
-          // "Ha" tugmasi bilan ustma-ust tushmasligini tekshirish
-          const overlapX = absoluteNewX < yesRect.right + 10 && absoluteNewX + btnWidth > yesRect.left - 10;
-          const overlapY = absoluteNewY < yesRect.bottom + 10 && absoluteNewY + btnHeight > yesRect.top - 10;
+    function saveData(key, val) {
+        choices[key] = val;
+    }
 
-          if (!(overlapX && overlapY)) {
-            isOverlapping = false;
-          }
+    function sendTelegramNotification(msg) {
+        if (BOT_TOKEN === "8649858034:AAEMj-aOD50LV9Bp3GU147dtb6XDO3QzcRI" || CHAT_ID === "8307518146") {
+            console.log("Telegram bot ma'lumotlari kiritilmagan.");
+            return;
         }
-
-        // Tugmani kartaning ichiga nisbatan joylashtirish
-        btn.style.left = `${newX}px`;
-        btn.style.top = `${newY}px`;
-
-        // Matnni o'zgartirish (2-savol uchun)
-        if (btnId === 'btnNo2') {
-          const randomText = failTexts[Math.floor(Math.random() * failTexts.length)];
-          btn.innerText = randomText;
-        }
-      };
-
-      btn.addEventListener('mouseover', moveBtn);
-      btn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        moveBtn();
-      });
+[14/08/2026 00:49] Aa: const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: msg,
+                parse_mode: 'HTML'
+            })
+        }).catch(err => console.error("Xatolik:", err));
     }
 
-    setupEvadingButton('btnNo1', 'yesBtn1');
-    setupEvadingButton('btnNo2', 'yesBtn2');
+    function finish() {
+        nextStep('Final');
+        document.getElementById('summaryContent').innerHTML = 
+            📍 <b>Vaqt:</b> ${choices['Soat']}<br>
+            📍 <b>Mashg'ulot:</b> ${choices['Reja']}<br>
+            📍 <b>Kompaniya:</b> ${choices['Tarkib']}
+        ;
 
-    function nextStep(step) {
-      document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
-      document.getElementById(`step${step}`).classList.remove('hidden');
-    }
+        // Telegram botga yuboriladigan matn
+        const telegramMessage = 🎉 <b>Shodiya javob berdi!</b>\n\n +
+            ⏰ <b>Vaqt:</b> ${choices['Soat']}\n +
+            🎯 <b>Reja:</b> ${choices['Reja']}\n +
+            👥 <b>Kompaniya:</b> ${choices['Tarkib']};
 
-    function selectTime(time) {
-      answers.time = time;
-      nextStep(4);
+        sendTelegramNotification(telegramMessage);
     }
+</script>
 
-    function selectActivity(act) {
-      answers.activity = act;
-      nextStep(5);
-    }
-
-    function finish(who) {
-      answers.who = who;
-      document.getElementById('resTime').innerText = answers.time;
-      document.getElementById('resActivity').innerText = answers.activity;
-      document.getElementById('resWho').innerText = answers.who;
-      nextStep('Final');
-    }
-  </script>
 </body>
 </html>
