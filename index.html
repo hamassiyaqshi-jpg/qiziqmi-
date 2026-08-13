@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maxsus Savol-Javob</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 35px 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      color: #d81b60;
+      font-size: 20px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn-yes {
+      background-color: #e91e63;
+      color: white;
+      z-index: 1;
+    }
+
+    .btn-yes:hover {
+      background-color: #c2185b;
+      transform: scale(1.05);
+    }
+
+    .btn-evade {
+      background-color: #757575;
+      color: white;
+      position: absolute;
+      transition: all 0.1s ease;
+      z-index: 10;
+      white-space: nowrap;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-option {
+      background-color: #f3e5f5;
+      color: #8e24aa;
+      border: 2px solid #ab47bc;
+    }
+
+    .btn-option:hover {
+      background-color: #ab47bc;
+      color: white;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .result-box {
+      text-align: left;
+      background: #fdf2f8;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #fbcfe8;
+      margin-top: 15px;
+    }
+
+    .result-box p {
+      margin-bottom: 8px;
+      color: #831843;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="mainCard">
+    <!-- 1-bosqich -->
+    <div id="step1">
+      <h2>Salom Shodiya, sen buni ertalab ko'ryapsan, men esa tuni bilan harakat qildim. Ko'rishni istaysanmi?</h2>
+      <div class="btn-container">
+        <button class="btn-yes" id="yesBtn1" onclick="nextStep(2)">Hohlayman</button>
+        <button id="btnNo1" class="btn-evade">Qiziq emas</button>
+      </div>
+    </div>
+
+    <!-- 2-bosqich -->
+    <div id="step2" class="hidden">
+      <h2>Ertaga ko'rishamizmi?</h2>
+      <div class="btn-container">
+        <button class="btn-yes" id="yesBtn2" onclick="nextStep(3)">Ha</button>
+        <button id="btnNo2" class="btn-evade">Yo'q</button>
+      </div>
+    </div>
+
+    <!-- 3-bosqich -->
+    <div id="step3" class="hidden">
+      <h2>Soat nechida ko'rishamiz?</h2>
+      <div class="option-grid">
+        <button class="btn-option" onclick="selectTime('12:00')">12:00</button>
+        <button class="btn-option" onclick="selectTime('13:00')">13:00</button>
+        <button class="btn-option" onclick="selectTime('14:00')">14:00</button>
+        <button class="btn-option" onclick="selectTime('15:00')">15:00</button>
+      </div>
+    </div>
+
+    <!-- 4-bosqich -->
+    <div id="step4" class="hidden">
+      <h2>Nima qilamiz?</h2>
+      <div class="option-grid">
+        <button class="btn-option" onclick="selectActivity('Sayr')">Sayr</button>
+        <button class="btn-option" onclick="selectActivity('Kino')">Kino</button>
+        <button class="btn-option" onclick="selectActivity('Ovqatlanish')">Ovqatlanish</button>
+        <button class="btn-option" onclick="selectActivity('Hammasini!')">Hammasini</button>
+      </div>
+    </div>
+
+    <!-- 5-bosqich -->
+    <div id="step5" class="hidden">
+      <h2>Do'stlar bilanmi yoki o'zimizmi?</h2>
+      <div class="btn-container">
+        <button class="btn-yes" onclick="finish('Do\'stlar bilan')">Do'stlar bilan</button>
+        <button class="btn-yes" onclick="finish('O\'zimiz')">O'zimiz</button>
+      </div>
+    </div>
+
+    <!-- Yakuniy sahifa -->
+    <div id="stepFinal" class="hidden">
+      <h2>Ajoyib! Rejamiz tayyor: ✨</h2>
+      <div class="result-box">
+        <p>⏰ <b>Vaqt:</b> <span id="resTime"></span></p>
+        <p>🎯 <b>Reja:</b> <span id="resActivity"></span></p>
+        <p>👥 <b>Kimlar:</b> <span id="resWho"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const failTexts = [
+      "Tutolmading!",
+      "Yana urinib ko'r!",
+      "Baribir bosolmaysan :)",
+      "Qochdim!",
+      "Urinish besamar!",
+      "Topolmaysan!"
+    ];
+
+    let answers = {};
+
+    function setupEvadingButton(btnId, yesBtnId) {
+      const btn = document.getElementById(btnId);
+      const card = document.getElementById('mainCard');
+      const yesBtn = document.getElementById(yesBtnId);
+
+      // Boshlang'ich joylashuv
+      btn.style.position = 'absolute';
+      btn.style.right = '20px';
+
+      const moveBtn = () => {
+        const cardRect = card.getBoundingClientRect();
+        const yesRect = yesBtn.getBoundingClientRect();
+        const btnWidth = btn.offsetWidth || 100;
+        const btnHeight = btn.offsetHeight || 40;
+
+        let newX, newY;
+        let isOverlapping = true;
+        let attempts = 0;
+
+        // "Ha" tugmasining ustiga tushib qolmasligi uchun xavfsiz koordinatani hisoblash
+        while (isOverlapping && attempts < 50) {
+          attempts++;
+          newX = Math.random() * (cardRect.width - btnWidth - 40) + 20;
+          newY = Math.random() * (cardRect.height - btnHeight - 40) + 20;
+
+          const absoluteNewX = cardRect.left + newX;
+          const absoluteNewY = cardRect.top + newY;
+
+          // "Ha" tugmasi bilan ustma-ust tushmasligini tekshirish
+          const overlapX = absoluteNewX < yesRect.right + 10 && absoluteNewX + btnWidth > yesRect.left - 10;
+          const overlapY = absoluteNewY < yesRect.bottom + 10 && absoluteNewY + btnHeight > yesRect.top - 10;
+
+          if (!(overlapX && overlapY)) {
+            isOverlapping = false;
+          }
+        }
+
+        // Tugmani kartaning ichiga nisbatan joylashtirish
+        btn.style.left = `${newX}px`;
+        btn.style.top = `${newY}px`;
+
+        // Matnni o'zgartirish (2-savol uchun)
+        if (btnId === 'btnNo2') {
+          const randomText = failTexts[Math.floor(Math.random() * failTexts.length)];
+          btn.innerText = randomText;
+        }
+      };
+
+      btn.addEventListener('mouseover', moveBtn);
+      btn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        moveBtn();
+      });
+    }
+
+    setupEvadingButton('btnNo1', 'yesBtn1');
+    setupEvadingButton('btnNo2', 'yesBtn2');
+
+    function nextStep(step) {
+      document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+      document.getElementById(`step${step}`).classList.remove('hidden');
+    }
+
+    function selectTime(time) {
+      answers.time = time;
+      nextStep(4);
+    }
+
+    function selectActivity(act) {
+      answers.activity = act;
+      nextStep(5);
+    }
+
+    function finish(who) {
+      answers.who = who;
+      document.getElementById('resTime').innerText = answers.time;
+      document.getElementById('resActivity').innerText = answers.activity;
+      document.getElementById('resWho').innerText = answers.who;
+      nextStep('Final');
+    }
+  </script>
+</body>
+</html>
